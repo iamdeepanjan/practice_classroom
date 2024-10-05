@@ -1,6 +1,10 @@
 package com.datta.practice.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+//import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,7 +21,12 @@ public class Student {
 	private String firstName;
 	private String lastName;
 	private int age;
-	@ManyToOne
+	
+//	@JsonManagedReference will serialize the Department object, and @JsonBackReference will 
+//	prevent serializing the Student again in a circular reference.@JsonBackReference it is used
+//	to prevent infinite recursion during serialization.
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonBackReference
 	private Department department;
 
 	public Student() {
